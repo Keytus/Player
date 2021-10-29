@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity()
         tabLayout = findViewById(R.id.tab_layout)
         val viewPager: ViewPager2 = findViewById(R.id.viewpager)
 
-        val adapter: ViewPagerAdapter = ViewPagerAdapter(this)
+        val adapter = ViewPagerAdapter(this)
 
         val audioFragment = AudioFragment()
         val videoFragment = VideoFragment()
@@ -32,16 +32,17 @@ class MainActivity : AppCompatActivity()
 
         viewPager.adapter = adapter
 
-        val mediator: TabLayoutMediator = TabLayoutMediator(tabLayout, viewPager
+        val mediator = TabLayoutMediator(tabLayout, viewPager
         ) { tab, position -> // Styling each tab here
             tab.text = "Tab $position"
         }
         mediator.attach()
+
     }
 
     class ViewPagerAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
-        var fragments: MutableList<Fragment> = ArrayList<Fragment>()
+        var fragments: MutableList<Fragment> = ArrayList()
 
         fun addNewFragment(newFragment: Fragment) {
             fragments.add(newFragment)

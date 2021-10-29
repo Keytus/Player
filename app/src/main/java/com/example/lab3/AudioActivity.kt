@@ -1,6 +1,7 @@
 package com.example.lab3
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,9 @@ import android.os.Message
 import android.view.View
 import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_audio.*
+import android.media.AudioManager
+import androidx.core.content.ContextCompat
+
 
 class AudioActivity : AppCompatActivity() {
 
@@ -58,7 +62,7 @@ class AudioActivity : AppCompatActivity() {
         Thread(Runnable {
             while (mp != null) {
                 try {
-                    var msg = Message()
+                    val msg = Message()
                     msg.what = mp?.currentPosition!!
                     handler.sendMessage(msg)
                     Thread.sleep(1000)
@@ -71,24 +75,24 @@ class AudioActivity : AppCompatActivity() {
     @SuppressLint("HandlerLeak")
     var handler = object : Handler() {
         override fun handleMessage(msg: Message) {
-            var currentPosition = msg.what
+            val currentPosition = msg.what
 
             // Update positionBar
             positionBar.progress = currentPosition
 
             // Update Labels
-            var elapsedTime = createTimeLabel(currentPosition)
+            val elapsedTime = createTimeLabel(currentPosition)
             elapsedTimeLabel.text = elapsedTime
 
-            var remainingTime = createTimeLabel(totalTime - currentPosition)
+            val remainingTime = createTimeLabel(totalTime - currentPosition)
             remainingTimeLabel.text = "-$remainingTime"
         }
     }
 
     fun createTimeLabel(time: Int): String {
         var timeLabel = ""
-        var min = time / 1000 / 60
-        var sec = time / 1000 % 60
+        val min = time / 1000 / 60
+        val sec = time / 1000 % 60
 
         timeLabel = "$min:"
         if (sec < 10) timeLabel += "0"
@@ -108,6 +112,19 @@ class AudioActivity : AppCompatActivity() {
             // Start
             mp?.start()
             playBtn.setBackgroundResource(R.drawable.stop)
+        }
+    }
+
+    fun onClick(view: View) {
+        if (mp == null) return
+        when (view.id) {
+            R.id.btnBackward -> mp?.getCurrentPosition()?.minus(10000)?.let { mp?.seekTo(it) }
+            R.id.btnForward -> mp?.getCurrentPosition()?.plus(10000)?.let { mp?.seekTo(it) }
+            R.id.btnBack ->
+            {
+                val intent = Intent(this@AudioActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
