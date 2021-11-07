@@ -15,12 +15,26 @@
         android:src="@drawable/image"
         android:layout_weight="1"/>
 
+    <TextView
+        android:id="@+id/tvSongName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Song name"
+        android:textSize="22sp"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:layout_weight="0.1"
+        android:gravity="center"/>
+
     <SeekBar
         android:id="@+id/positionBar"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_weight="0.1"/>
+        android:layout_weight="0.1" />
 
     <LinearLayout
         android:layout_width="match_parent"

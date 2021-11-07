@@ -1,38 +1,56 @@
 package com.example.lab3
 
-import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListAdapter
 import android.widget.ListView
+import androidx.fragment.app.Fragment
+import com.mtechviral.mplaylib.MusicFinder
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
+
+val myListSong: ArrayList<SongInfo> = ArrayList<SongInfo>()
+var IsAudioLoaded:Boolean = false
 
 class AudioFragment : Fragment() {
 
     var adapter:MySongAdapter?=null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if (!IsAudioLoaded)
+        {
+            var songsJob = runBlocking{
+                async{
+                    val songFinder = MusicFinder(activity?.contentResolver)
+                    songFinder.prepare()
+                    songFinder.allSongs
+                }
+            }
+            runBlocking{
+                launch{
+                    val songs = songsJob.await()
+                    songs.forEach()
+                    {
+                        myListSong?.add(SongInfo(it.title,it.artist,it.uri))
+                    }
+                    IsAudioLoaded = true
+                }
+            }
+        }
         val v: View = inflater.inflate(R.layout.fragment_audio, null)
 
-        val myListSong: ArrayList<SongInfo> = ArrayList<SongInfo>()
-
-        myListSong?.add(SongInfo("Cyka","Blyat","Nax"))
-
-        adapter = myListSong?.let { getActivity()?.let { it1 -> MySongAdapter(it1.baseContext, it) } }
+        adapter = myListSong?.let { activity?.let { it1 -> MySongAdapter(it1.baseContext) } }
 
         val lsListSongs: ListView? = v.findViewById(R.id.lsListSongs)
 
-        lsListSongs?.setAdapter(adapter as ListAdapter?)
+        lsListSongs?.adapter = adapter as ListAdapter?
 
         return v
     }

@@ -3,15 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.225" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable/apollo_holo_dark_notifiation_bar_collapse.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable/background_ticket.xml" value="0.225" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable/button_background.xml" value="0.225" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable/ic_launcher_background.xml" value="0.225" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/drawable/status_bg.xml" value="0.2222222222222222" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/activity_audio.xml" value="0.22327898550724637" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/activity_main.xml" value="0.23596014492753623" />
-        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/activity_video.xml" value="0.24909420289855072" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/activity_video.xml" value="0.176" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/fragment_audio.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/fragment_video.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/movie_ticket.xml" value="0.24909420289855072" />
         <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/song_ticket.xml" value="0.23233695652173914" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/status_bar.xml" value="0.22780797101449277" />
+        <entry key="..\:/Users/User/Desktop/Android/Lab3/app/src/main/res/layout/status_bar_expanded.xml" value="0.22780797101449277" />
       </map>
     </option>
   </component>

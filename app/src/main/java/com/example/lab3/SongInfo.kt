@@ -1,8 +1,10 @@
 package com.example.lab3
 
-class SongInfo(Title: String, AuthorName: String, SongURL: String)
+import android.net.Uri
+
+class SongInfo(Title: String , AuthorName: String , SongURI: Uri)
 {
     var Title:String?= Title
     var AuthorName:String?= AuthorName
-    var SongURL:String?= SongURL
+    var SongURI:Uri?= SongURI
 }

@@ -11,15 +11,21 @@ import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.song_ticket.view.*
 
 
-class MySongAdapter(var context: Context,var myListSong: ArrayList<SongInfo>) : BaseAdapter()
+var currentSongPosition:Int = 0
+
+
+class MySongAdapter(var context: Context) : BaseAdapter()
 {
     override fun getView(postion: Int, p1: View?, p2: ViewGroup?): View {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val myView= inflater.inflate(R.layout.song_ticket, p2, false)
-        val Song= this.myListSong[postion]
-        myView.tvSongName.text = Song.Title
-        myView.tvAuthor.text = Song.AuthorName
+        val song= myListSong[postion]
+        myView.tvSongName.text = song.Title
+        myView.tvSongName.isSelected = true
+        myView.tvAuthor.text = song.AuthorName
+        myView.tvAuthor.isSelected = true
         myView.buPlay.setOnClickListener{
+            currentSongPosition = postion
             val intent = Intent(context, AudioActivity::class.java)
             intent.flags = FLAG_ACTIVITY_NEW_TASK
             startActivity(context,intent,null)
@@ -28,7 +34,7 @@ class MySongAdapter(var context: Context,var myListSong: ArrayList<SongInfo>) : 
     }
 
     override fun getItem(item: Int): Any {
-        return this.myListSong[item]
+        return myListSong[item]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -36,6 +42,6 @@ class MySongAdapter(var context: Context,var myListSong: ArrayList<SongInfo>) : 
     }
 
     override fun getCount(): Int {
-        return this.myListSong.size
+        return myListSong.size
     }
 }

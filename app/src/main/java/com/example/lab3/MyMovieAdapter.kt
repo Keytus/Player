@@ -9,6 +9,8 @@ import android.widget.BaseAdapter
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.song_ticket.view.*
 
+var currentMoviePosition:Int = 0
+
 class MyMovieAdapter(var context: Context, var myListMovie: ArrayList<MovieInfo>) : BaseAdapter()
 {
     override fun getView(postion: Int, p1: View?, p2: ViewGroup?): View {
@@ -17,9 +19,10 @@ class MyMovieAdapter(var context: Context, var myListMovie: ArrayList<MovieInfo>
 
         val movie = this.myListMovie[postion]
         myView.tvSongName.text = movie.Title
-        myView.tvAuthor.text = movie.AuthorName
+        myView.tvAuthor.text = movie.duration
 
         myView.buPlay.setOnClickListener{
+            currentMoviePosition = postion
             val intent = Intent(context, VideoActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             ContextCompat.startActivity(context, intent, null)

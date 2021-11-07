@@ -1,38 +1,48 @@
 package com.example.lab3
 
 import android.annotation.SuppressLint
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_audio.*
-import android.media.AudioManager
-import androidx.core.content.ContextCompat
 
 
 class AudioActivity : AppCompatActivity() {
 
-    private var mp: MediaPlayer? = null
+    companion object {
+        var mp: MediaPlayer? = null
+    }
     private var totalTime: Int = 0
+    private var song: SongInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio)
 
-        mp = MediaPlayer.create(this, R.raw.explosion)
+        song = myListSong[currentSongPosition]
+
+        mp?.reset()
+        mp = MediaPlayer.create(this, song!!.SongURI)
         mp?.isLooping = true
         mp?.setVolume(0.5f, 0.5f)
         totalTime = mp?.duration!!
+
+        tvSongName.text = song?.Title
+        tvSongName.isSelected = true
 
         volumeBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
-                        var volumeNum = progress / 100.0f
+                        val volumeNum = progress / 100.0f
                         mp?.setVolume(volumeNum, volumeNum)
                     }
                 }
@@ -125,6 +135,41 @@ class AudioActivity : AppCompatActivity() {
                 val intent = Intent(this@AudioActivity, MainActivity::class.java)
                 startActivity(intent)
             }
+            R.id.btnPrev ->
+            {
+                if (currentSongPosition != 0)
+                {
+                    currentSongPosition--
+                    song = myListSong[currentSongPosition]
+                    mp?.reset()
+                    mp = MediaPlayer.create(this, song!!.SongURI)
+                    mp?.isLooping = true
+                    mp?.setVolume(0.5f, 0.5f)
+                    totalTime = mp?.duration!!
+
+                    tvSongName.text = song?.Title
+                    tvSongName.isSelected = true
+                    playBtnClick(view)
+                }
+            }
+            R.id.btnNext->
+            {
+                if (currentSongPosition != myListSong.size-1)
+                {
+                    currentSongPosition++
+                    song = myListSong[currentSongPosition]
+                    mp?.reset()
+                    mp = MediaPlayer.create(this, song!!.SongURI)
+                    mp?.isLooping = true
+                    mp?.setVolume(0.5f, 0.5f)
+                    totalTime = mp?.duration!!
+
+                    tvSongName.text = song?.Title
+                    tvSongName.isSelected = true
+
+                    playBtnClick(view)
+                }
+            }
         }
     }
 
@@ -139,8 +184,21 @@ class AudioActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop(){
+        super.onStop()
+        notification()
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         releaseMP()
+    }
+
+    private fun notification()
+    {
+        val serviceIntent = Intent(this@AudioActivity, NotificationService::class.java)
+        serviceIntent.action = Constants.ACTION.STARTFOREGROUND_ACTION
+        startService(serviceIntent)
     }
 }

@@ -1,8 +1,10 @@
 package com.example.lab3
 
-class MovieInfo(Title: String, AuthorName: String, MovieURL: String)
+import android.net.Uri
+
+class MovieInfo(Title: String, duration: String, MovieURL: Uri)
 {
     var Title:String?= Title
-    var AuthorName:String?= AuthorName
-    var MovieURL:String?= MovieURL
+    var duration:String?= duration
+    var MovieURL:Uri?= MovieURL
 }
